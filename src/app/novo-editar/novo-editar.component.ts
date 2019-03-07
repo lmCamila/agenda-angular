@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 @Component({
   selector: 'app-novo-editar',
-  templateUrl: './novo-editar.component.html',
-  styleUrls: ['./novo-editar.component.css']
+  templateUrl: './novo-editar.component.html'
 })
-export class NovoEditarComponent implements OnInit {
+export class NovoEditarComponent  {
 
-  constructor() { }
+  constructor( public dialogRef: MatDialogRef<NovoEditarComponent>) { }
 
-  ngOnInit() {
+  onNoClick(): void {
+    this.dialogRef.close();
   }
-
 }

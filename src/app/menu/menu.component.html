@@ -1,3 +1,14 @@
-<p>
-  menu works!
-</p>
+<mat-toolbar id="menu" color="primary" *ngIf="!menuSearch">
+    <span>Contatos</span>
+  <button mat-icon-button (click)="modifyMenu()" >
+    <mat-icon>search</mat-icon>
+  </button>
+</mat-toolbar>
+<mat-toolbar id="menu" *ngIf="menuSearch">
+    <mat-form-field style="font-size: 13pt; margin-bottom: -1%;width: 100%">
+      <input (keyup)="search($event)" class="inputMenu"  matInput type="search" placeholder="Buscar ..." />
+    </mat-form-field>
+    <button mat-icon-button (click)="modifyMenu()">
+      <mat-icon>close</mat-icon>
+    </button>
+</mat-toolbar>

@@ -6,9 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
-
+  menuSearch = false;
   constructor() { }
 
+  modifyMenu() {
+    this.menuSearch = !this.menuSearch;
+  }
+  search(event: KeyboardEvent) {
+    console.log((event.target as HTMLInputElement).value);
+  }
   ngOnInit() {
   }
 
