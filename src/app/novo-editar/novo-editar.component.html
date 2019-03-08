@@ -1,35 +1,41 @@
-<h1>Novo contato</h1>
-<div mat-dialog-content>
-
-    <mat-form-field>
-        <input matInput placeholder="Nome" />
-    </mat-form-field>
-    <mat-form-field>
-        <input matInput placeholder="Sobrenome" />
-    </mat-form-field>
-    <div>
-        <label for="avatar">Avatar:</label>
-        <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg">
-        <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
-    </div>
-    <mat-form-field>
-        <input matInput placeholder="Email" />
-    </mat-form-field>
-    <mat-form-field>
-        <input matInput placeholder="Telefone" />
-    </mat-form-field>
-    <mat-form-field>
-        <input matInput placeholder="Endereço" />
-    </mat-form-field>
-    <mat-radio-group>
-        <mat-radio-button value="m">Masculino</mat-radio-button>
-        <mat-radio-button value="f">Feminino</mat-radio-button>
-    </mat-radio-group>
-    <mat-form-field>
-        <input matInput placeholder="Empresa" />
-    </mat-form-field>
-    <mat-form-field>
-        <input matInput placeholder="Comentários" />
-    </mat-form-field>
-    <button type="button" mat-flat-button color="primary">Enviar</button>
-</div>
+<mat-card>
+    <mat-card-header>
+            <h1>Novo contato</h1>
+    </mat-card-header>
+    <mat-card-content>
+            <mat-form-field style="width: 100%">
+                    <input matInput placeholder="Nome" />
+                </mat-form-field>
+                <mat-form-field style="width: 100%">
+                    <input matInput placeholder="Sobrenome" />
+                </mat-form-field>
+                <div>
+                    <label for="avatar">Avatar:</label>
+                    <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg" style="width: 100%">
+                    <mat-progress-bar mode="determinate" value="40" style="padding-top: 5%; width: 60%"></mat-progress-bar>
+                </div>
+                <mat-form-field style="padding-top:3%; width: 100%">
+                    <input matInput placeholder="Email" />
+                </mat-form-field>
+                <mat-form-field style="width: 100%">
+                    <input matInput placeholder="Telefone" />
+                </mat-form-field>
+                <mat-form-field style="width: 100%">
+                    <input matInput placeholder="Endereço" />
+                </mat-form-field>
+                <label>Genero:</label>
+                <mat-radio-group style="width: 100%">
+                    <mat-radio-button value="m" style="padding-right: 5%">Masculino</mat-radio-button>
+                    <mat-radio-button value="f">Feminino</mat-radio-button>
+                </mat-radio-group>
+                <mat-form-field style="padding-top:3%;width: 100%">
+                    <input matInput placeholder="Empresa" />
+                </mat-form-field>
+                <mat-form-field style="width: 100%">
+                    <textarea matInput placeholder="Comentários"></textarea>
+                </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions style=" display:flex; justify-content: flex-end">
+            <button type="button" mat-flat-button color="primary">Enviar</button>
+    </mat-card-actions>
+</mat-card>

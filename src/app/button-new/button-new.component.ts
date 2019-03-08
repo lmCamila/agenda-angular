@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material';
-import { ButtonNovoEditarComponent } from './button-novo-editar.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-button-new',
@@ -8,11 +7,10 @@ import { ButtonNovoEditarComponent } from './button-novo-editar.component';
   styleUrls: ['./button-new.component.css']
 })
 export class ButtonNewComponent implements OnInit {
-  dialogRef: MatDialogRef<ButtonNovoEditarComponent>;
-  constructor(public dialog: MatDialog) { }
-  openDialogNew(): void {
-  this.dialogRef = this.dialog.open(ButtonNovoEditarComponent);
+  constructor(private router: Router) { }
 
+  newContact() {
+    this.router.navigate(['/new']);
   }
   ngOnInit() {
   }

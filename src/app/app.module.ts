@@ -6,10 +6,12 @@ import { AppComponent } from './app.component';
 import { ContatoComponent } from './contato/contato.component';
 import { MenuComponent } from './menu/menu.component';
 import { NovoEditarComponent } from './novo-editar/novo-editar.component';
-import { ButtonNovoEditarComponent } from './button-new/button-novo-editar.component';
 
 import { DemoMaterialModule } from 'src/material-module';
 import { ButtonNewComponent } from './button-new/button-new.component';
+import { ListaContatosComponent } from './lista-contatos/lista-contatos.component';
+import { ContatoDetalhesComponent } from './contato-detalhes/contato-detalhes.component';
+import { routing } from './app.routing';
 
 @NgModule({
   declarations: [
@@ -18,14 +20,17 @@ import { ButtonNewComponent } from './button-new/button-new.component';
     MenuComponent,
     NovoEditarComponent,
     ButtonNewComponent,
-    ButtonNovoEditarComponent
+    ListaContatosComponent,
+    ContatoDetalhesComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    DemoMaterialModule
+    DemoMaterialModule,
+    routing
   ],
-  exports: [ ButtonNovoEditarComponent],
+  exports: [ ],
+  entryComponents: [ContatoComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

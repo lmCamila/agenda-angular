@@ -7,9 +7,6 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 })
 export class NovoEditarComponent  {
 
-  constructor( public dialogRef: MatDialogRef<NovoEditarComponent>) { }
+  constructor() { }
 
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
 }
