@@ -1,10 +1,10 @@
-<mat-toolbar id="menu" color="primary" *ngIf="!menuSearch">
+<mat-toolbar id="menu" color="primary" *ngIf="!menuSearch" style="box-shadow: 1px 1px 5px rgb(77, 76, 76)">
     <span><a style="text-decoration: none;color: white" routerLink="">Contatos</a></span>
   <button mat-icon-button (click)="modifyMenu()" >
     <mat-icon>search</mat-icon>
   </button>
 </mat-toolbar>
-<mat-toolbar id="menu" *ngIf="menuSearch">
+<mat-toolbar id="menu" *ngIf="menuSearch" style="box-shadow: 1px 1px 5px rgb(77, 76, 76)">
     <mat-form-field style="font-size: 13pt; margin-bottom: -1%;width: 100%">
       <input (keyup)="search($event)" class="inputMenu"  matInput type="search" placeholder="Buscar ..." />
     </mat-form-field>

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -9,8 +10,11 @@ export class ContatoComponent implements OnInit {
 
   panelOpenState = false;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
+  showDetails(){
+    this.router.navigate(['/id']);
+  }
   ngOnInit() {
   }
 

@@ -12,6 +12,7 @@ import { ButtonNewComponent } from './button-new/button-new.component';
 import { ListaContatosComponent } from './lista-contatos/lista-contatos.component';
 import { ContatoDetalhesComponent } from './contato-detalhes/contato-detalhes.component';
 import { routing } from './app.routing';
+import { PaginationComponent } from './pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { routing } from './app.routing';
     ButtonNewComponent,
     ListaContatosComponent,
     ContatoDetalhesComponent,
+    PaginationComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,7 +32,7 @@ import { routing } from './app.routing';
     routing
   ],
   exports: [ ],
-  entryComponents: [ContatoComponent],
+  entryComponents: [ContatoComponent,NovoEditarComponent],
   providers: [],
   bootstrap: [AppComponent]
 })
