@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ListContactsService } from '../list-contacts.service';
 
 @Component({
   selector: 'app-lista-contatos',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListaContatosComponent implements OnInit {
 
-  constructor() { }
+  isResponsiveList: boolean;
+
+  constructor(private listContactsService: ListContactsService) { }
 
   ngOnInit() {
+    this.isResponsiveList = this.listContactsService.getListContactResponsive();
+    this.listContactsService.issueEventListContact.subscribe(isResponsive=>{
+      this.isResponsiveList = isResponsive;
+    });
   }
 
 }
