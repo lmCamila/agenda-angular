@@ -1,4 +1,7 @@
-<div class="listContact">
+<div  [ngClass]="{
+    'listContact':!isResponsiveList,
+    'listContactResponsive': isResponsiveList
+}">
     <app-contato></app-contato>
     <app-contato></app-contato>
     <app-contato></app-contato>

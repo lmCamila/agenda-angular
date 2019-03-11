@@ -1,5 +1,5 @@
 <mat-toolbar id="menu" color="primary" *ngIf="!menuSearch" style="box-shadow: 1px 1px 5px rgb(77, 76, 76)">
-    <span><a style="text-decoration: none;color: white" routerLink="">Contatos</a></span>
+    <span><a style="text-decoration: none;color: white" routerLink="" (click)="onClick()" >Contatos</a></span>
   <button mat-icon-button (click)="modifyMenu()" >
     <mat-icon>search</mat-icon>
   </button>

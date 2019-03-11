@@ -1,3 +1,4 @@
+import { ListContactsService } from '../shared/list-contacts.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,13 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
   menuSearch = false;
-  constructor() { }
+  constructor(private listContactService: ListContactsService) { }
 
   modifyMenu() {
     this.menuSearch = !this.menuSearch;
   }
+
   search(event: KeyboardEvent) {
     console.log((event.target as HTMLInputElement).value);
+  }
+
+  onClick() {
+    this.listContactService.setListContactResponsive(false);
   }
   ngOnInit() {
   }

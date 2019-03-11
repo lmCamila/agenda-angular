@@ -1,5 +1,6 @@
+import { ListContactsService } from '../shared/list-contacts.service';
 import { Component, OnInit } from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-novo-editar',
@@ -7,7 +8,15 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
   styleUrls: ['./novo-editar.component.css']
 })
 export class NovoEditarComponent  {
-
-  constructor() { }
+  title = 'Novo';
+  constructor(private route: ActivatedRoute,
+              private listContactService: ListContactsService) {
+    this.listContactService.setListContactResponsive(true);
+    if ( this.route.snapshot.routeConfig.path === 'new') {
+      this.title = 'Novo';
+    } else {
+      this.title = 'Editar';
+    }
+  }
 
 }
