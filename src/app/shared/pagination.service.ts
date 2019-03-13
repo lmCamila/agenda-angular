@@ -17,6 +17,7 @@ export class PaginationService {
     page === 1 ? inicio = 0 : inicio = 15 * (page - 1);
     this.mudaValoresEvent.emit(inicio);
   }
+
   getCurrentPage() {
     return this.currentPage;
   }
