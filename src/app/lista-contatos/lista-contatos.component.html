@@ -2,15 +2,6 @@
     'listContact':!isResponsiveList,
     'listContactResponsive': isResponsiveList
 }">
-    <app-contato></app-contato>
-    <app-contato></app-contato>
-    <app-contato></app-contato>
-    <app-contato></app-contato>
-    <app-contato></app-contato>
-    <app-contato></app-contato>
-    <app-contato></app-contato>
-    <app-contato></app-contato>
-    <app-contato></app-contato>
-    <app-contato></app-contato>
+    <app-contato *ngFor="let c of contacts" [contact]=c ></app-contato>
 </div>
 <router-outlet></router-outlet>

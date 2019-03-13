@@ -14,6 +14,7 @@ import { ContatoDetalhesComponent } from './contato-detalhes/contato-detalhes.co
 import { PaginationComponent } from './pagination/pagination.component';
 import { RoutingModule } from './routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,6 +31,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     DemoMaterialModule,
     ReactiveFormsModule,
+    HttpClientModule,
     RoutingModule
   ],
   exports: [ ],
