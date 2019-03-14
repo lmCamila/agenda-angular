@@ -8,8 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./button-new.component.css']
 })
 export class ButtonNewComponent implements OnInit {
-  constructor(private router: Router,
-              ) { }
+  constructor(private router: Router) { }
 
   newContact() {
     this.router.navigate(['/new']);

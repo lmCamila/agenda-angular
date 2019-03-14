@@ -2,28 +2,31 @@
     <mat-card-title>
         <h1>{{title}} contato</h1>
     </mat-card-title>
-    <form [formGroup]="formulario">
+    <form [formGroup]="formulario" (ngSubmit)="onSubmit()" >
         <mat-card-content>
             <div>
                 <mat-form-field style="width: 100%">
-                    <input matInput placeholder="Nome"  formControlName="nome" [errorStateMatcher]="matcher"/>
+                    <input matInput placeholder="Nome"  formControlName="firstName" [errorStateMatcher]="matcher"/>
                 </mat-form-field>
-                <mat-error *ngIf="!formulario.get('nome').valid">
+                <mat-error *ngIf="!formulario.get('firstName').valid">
                     Nome é obrigatório. 
                 </mat-error>
             </div>
             <div>
                 <mat-form-field style="width: 100%">
-                    <input matInput placeholder="Sobrenome" formControlName="sobrenome" [errorStateMatcher]="matcher"/>
+                    <input matInput placeholder="Sobrenome" formControlName="lastName" [errorStateMatcher]="matcher"/>
                 </mat-form-field>
-                <mat-error *ngIf="!formulario.get('sobrenome').valid">
+                <mat-error *ngIf="!formulario.get('lastName').valid">
                     Sobrenome é obrigatório. 
                 </mat-error>
             </div>
             <div style="margin-top:5%">
                 <label for="avatar">Avatar:</label>
                 <input type="file" id="avatar" formControlName="avatar" accept="image/png, image/jpeg">
-                <mat-progress-bar mode="determinate" value="40" style="padding-top: 5%; width:200px"></mat-progress-bar>
+                <mat-icon style="color:green">check</mat-icon>
+                <div style="width:80%; margin-top:3%">
+                    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                </div>
             </div>
             <div>
                 <mat-form-field style="padding-top:3%; width: 100%">
@@ -38,23 +41,23 @@
             </div>
             <div>
                 <mat-form-field style="width: 100%">
-                    <input matInput placeholder="Telefone" formControlName="telefone" [errorStateMatcher]="matcher"/>
+                    <input matInput placeholder="Telefone" formControlName="phone" [errorStateMatcher]="matcher"/>
                 </mat-form-field>
-                <mat-error *ngIf="!formulario.get('telefone').valid">
+                <mat-error *ngIf="!formulario.get('phone').valid">
                     Telefone é obrigatório. 
                 </mat-error>
             </div>
             <div>
                 <mat-form-field style="width: 100%">
-                    <input matInput placeholder="Endereço" formControlName="endereco" [errorStateMatcher]="matcher"/>
+                    <input matInput placeholder="Endereço" formControlName="address" [errorStateMatcher]="matcher"/>
                 </mat-form-field>
-                <mat-error *ngIf="!formulario.get('endereco').valid">
+                <mat-error *ngIf="!formulario.get('address').valid">
                     Endereço é obrigatório. 
                 </mat-error>
             </div>
             <div style="margin-top:5%">
                 <label>Genero:</label>
-                <mat-radio-group formControlName="genero">
+                <mat-radio-group formControlName="gender">
                     <mat-radio-button  value="m" style="padding: 0% 5% 0% 5%" >Masculino</mat-radio-button>
                     <mat-radio-button  value="f"  >Feminino</mat-radio-button>
                 </mat-radio-group>
@@ -62,20 +65,27 @@
 
             <div>
                 <mat-form-field style="padding-top:3%; width: 100%">
-                    <input matInput placeholder="Empresa" formControlName="empresa" [errorStateMatcher]="matcher"/>
+                    <input matInput placeholder="Empresa" formControlName="company" [errorStateMatcher]="matcher"/>
                 </mat-form-field>
-                <mat-error *ngIf="!formulario.get('empresa').valid">
+                <mat-error *ngIf="!formulario.get('company').valid">
                     Empresa é obrigatório. 
                 </mat-error>
             </div>
             <div>
                 <mat-form-field style="width: 100%">
-                    <textarea matInput placeholder="Comentários" formControlName="comentarios"></textarea>
+                    <textarea matInput placeholder="Comentários" formControlName="comments"></textarea>
                 </mat-form-field>
+            </div>
+            <div style="margin-top:5%">
+                <label>Adicionar contato aos favoritos?</label>
+                <mat-radio-group formControlName="isFavorite">
+                    <mat-radio-button  value="true" style="padding: 0% 5% 0% 5%" >Sim</mat-radio-button>
+                    <mat-radio-button  value="false"  >Não</mat-radio-button>
+                </mat-radio-group>
             </div>
         </mat-card-content>
         <mat-card-actions>
-            <button type="button" mat-flat-button color="primary" (click)="onSubmit()" >Enviar</button>
+            <button type="submit" mat-flat-button color="primary"  >Enviar</button>
             <button type="button" mat-flat-button (click)="resetForm()"  >Cancelar</button>
         </mat-card-actions>
         

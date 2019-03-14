@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, FormControl, FormGroupDirective, NgForm } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material';
 import { Contact } from '../shared/model/contact';
+import { Location } from '@angular/common';
 
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -26,9 +27,10 @@ export class NovoEditarComponent implements OnInit {
   formulario: FormGroup;
   inscriptionUrl: Subscription;
   idContact: number;
-
+  avatar: string;
 
   constructor(private route: ActivatedRoute,
+              private location: Location,
               private listContactService: ListContactsService,
               private connection: ConnectionApiService,
               private formBuilder: FormBuilder) {
@@ -42,33 +44,48 @@ export class NovoEditarComponent implements OnInit {
       this.title = 'Novo';
     } else {
       this.title = 'Editar';
+      this.inscriptionUrl = this.route.params.subscribe(
+        (params: any) => {
+            const id = 'id';
+            this.idContact = params[id];
+            const c$ =  this.connection.getContactById(params[id]);
+            c$.subscribe(contactById => {
+              this.fillForm(contactById);
+              this.avatar = contactById.info.avatar;
+            });
+        }
+      );
     }
     this.formulario = this.formBuilder.group({
-      nome: [null, [Validators.required, Validators.minLength(3)]],
-      sobrenome: [null, [Validators.required, Validators.minLength(3)]],
+      firstName: [null, [Validators.required, Validators.minLength(3)]],
+      lastName: [null, [Validators.required, Validators.minLength(3)]],
       avatar: [null],
       email: [null, [Validators.required, Validators.email]],
-      telefone: [null, [Validators.required, Validators.minLength(3)]],
-      endereco: [null, [Validators.required, Validators.minLength(3)]],
-      genero: ['f', Validators.required],
-      empresa: [null, [Validators.required, Validators.minLength(3)]],
-      comentarios: [null]
+      phone: [null, [Validators.required, Validators.minLength(3)]],
+      address: [null, [Validators.required, Validators.minLength(3)]],
+      gender: ['f', Validators.required],
+      company: [null, [Validators.required, Validators.minLength(3)]],
+      comments: [null],
+      isFavorite: ['false', Validators.required],
     });
-    this.inscriptionUrl = this.route.params.subscribe(
-      (params: any) => {
-          const id = 'id';
-          this.idContact = params[id];
-          const c$ =  this.connection.getContactById(params[id]);
-          c$.subscribe(contactById => {
-            this.fillForm(contactById);
-          });
-      }
-    );
   }
 
   onSubmit() {
     if (this.formulario.valid) {
-      console.log(this.formulario);
+      let valueSubmit = Object.assign({}, this.formulario.value);
+      valueSubmit = Object.assign(valueSubmit, {
+        isFavorite: valueSubmit.isFavorite === 'true' ? true : false,
+        avatar: this.avatar == null ? 'null' : this.avatar
+      });
+      this.connection.createContact(valueSubmit).subscribe(
+        success => {
+          alert('Cadastrado com sucesso!');
+          this.resetForm();
+          this.location.back();
+        },
+        error => alert('Error ao inserir contato')
+      );
+
     } else {
       console.log('formulário invalido');
     }
@@ -80,15 +97,16 @@ export class NovoEditarComponent implements OnInit {
 
   fillForm(dados: Contact) {
     this.formulario.patchValue({
-      nome: dados.firstName,
-      sobrenome: dados.lastName,
+      firstName: dados.firstName,
+      lastName: dados.lastName,
       avatar: null,
       email: dados.email,
-      telefone: dados.info.phone,
-      endereco: dados.info.address,
-      genero: dados.gender,
-      empresa: dados.info.company ,
-      comentarios: dados.info.comments
+      phone: dados.info.phone,
+      address: dados.info.address,
+      gender: dados.gender,
+      company: dados.info.company ,
+      comments: dados.info.comments,
+      isFavorite: String(dados.isFavorite)
     });
   }
 

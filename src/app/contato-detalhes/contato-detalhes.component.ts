@@ -31,7 +31,6 @@ export class ContatoDetalhesComponent implements OnInit, OnDestroy {
           const id = 'id';
           const c$ =  this.connection.getContactById(params[id]);
           c$.subscribe(contactById => {
-            console.log(contactById);
             this.contact = contactById;
           });
       }
