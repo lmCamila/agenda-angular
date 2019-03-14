@@ -5,16 +5,20 @@ import { Injectable, EventEmitter } from '@angular/core';
 })
 export class ListContactsService {
 
+  listContactLength: number;
   listContactResponsive: boolean;
 
   issueEventListContact = new EventEmitter < boolean > ( );
+  changeListLenght = new EventEmitter< number > ( );
 
   constructor() { }
+
   setListContactResponsive(isResponsive: boolean) {
     this.listContactResponsive = isResponsive;
     this.issueEventListContact.emit(isResponsive);
   }
-  getListContactResponsive() {
+  getListContactResponsive(): boolean {
     return this.listContactResponsive;
   }
+
 }

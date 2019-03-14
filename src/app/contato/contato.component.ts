@@ -1,8 +1,9 @@
+import { ContactSimple } from './../shared/model/contac-silmple';
 import { Router } from '@angular/router';
 import { Component, OnInit, Input} from '@angular/core';
 
 import { ListContactsService } from '../shared/list-contacts.service';
-import { Contact } from './contact';
+import { Contact } from '../shared/model/contact';
 
 @Component({
   selector: 'app-contato',
@@ -13,7 +14,7 @@ import { Contact } from './contact';
 export class ContatoComponent implements OnInit {
 
   panelOpenState = false;
-  @Input() contact: Contact;
+  @Input() contact: ContactSimple;
 
   constructor(private router: Router,
               private listContactService: ListContactsService) { }
@@ -22,8 +23,7 @@ export class ContatoComponent implements OnInit {
   }
 
   showDetails() {
-    this.listContactService.setListContactResponsive(true);
-    this.router.navigate(['/id']);
+    this.router.navigate([`/${this.contact.id}`]);
   }
 
 }

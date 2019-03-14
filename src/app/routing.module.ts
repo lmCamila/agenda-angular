@@ -9,8 +9,8 @@ import { ListaContatosComponent } from './lista-contatos/lista-contatos.componen
 const appRoutes: Routes = [
 { path: '' , component: ListaContatosComponent, children: [
     { path: 'new' , component: NovoEditarComponent},
-    { path: 'id' , component: ContatoDetalhesComponent},
-    { path: 'id/edit' , component: NovoEditarComponent}
+    { path: ':id' , component: ContatoDetalhesComponent},
+    { path: ':id/edit' , component: NovoEditarComponent}
 ]}];
 
 @NgModule({

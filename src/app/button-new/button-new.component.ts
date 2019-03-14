@@ -9,10 +9,9 @@ import { Router } from '@angular/router';
 })
 export class ButtonNewComponent implements OnInit {
   constructor(private router: Router,
-              private listContactService: ListContactsService) { }
+              ) { }
 
   newContact() {
-    this.listContactService.setListContactResponsive(true);
     this.router.navigate(['/new']);
   }
   ngOnInit() {

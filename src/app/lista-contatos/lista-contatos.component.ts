@@ -1,10 +1,8 @@
-import { ConnectionApiService } from './../shared/connection-api.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { ListContactsService } from '../shared/list-contacts.service';
-import { Contact } from './../contato/contact';
-
+import { ConnectionApiService } from './../shared/connection-api.service';
 @Component({
   selector: 'app-lista-contatos',
   templateUrl: './lista-contatos.component.html',
@@ -14,6 +12,7 @@ export class ListaContatosComponent implements OnInit, OnDestroy {
 
   isResponsiveList = false;
   inscription: Subscription;
+  inscriptionList: Subscription;
   inicio = 0;
   fim = 15;
   contacts: any[];
@@ -22,7 +21,7 @@ export class ListaContatosComponent implements OnInit, OnDestroy {
               private apiService: ConnectionApiService) { }
 
   ngOnInit() {
-    this.apiService.list().subscribe((dados) => {
+    this.inscriptionList =  this.apiService.list().subscribe((dados) => {
       dados = dados.sort((a, b) => {
         if (a.firstName.toLowerCase() > b.firstName.toLowerCase()) {
           return 1;
@@ -44,6 +43,7 @@ export class ListaContatosComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.inscription.unsubscribe();
+    this.inscriptionList.unsubscribe();
   }
 
 }

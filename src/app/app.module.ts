@@ -35,7 +35,7 @@ import { HttpClientModule } from '@angular/common/http';
     RoutingModule
   ],
   exports: [ ],
-  entryComponents: [ContatoComponent, NovoEditarComponent],
+  entryComponents: [ContatoComponent, NovoEditarComponent, PaginationComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

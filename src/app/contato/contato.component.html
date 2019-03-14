@@ -1,14 +1,14 @@
-<mat-card class="card-contact" style="width: 270px; margin: 15px;display: flex;justify-content: space-around">
+<mat-card class="card-contact" style="width: 270px; margin: 15px;display: flex;">
     <mat-card-header (click)="showDetails()">
         <div mat-card-avatar id="avatar">
             <img src="{{ contact.info.avatar }}"
                 width="70px" height="70px" style="width: 75px; height: 75px; border-radius: 70%;">
         </div>
-        <mat-card-title style="margin-left:20%">
+        <mat-card-title style="margin-left:30%">
             {{ contact.firstName }} {{ contact.lastName }}
         </mat-card-title>
-        <mat-card-actions>
-            <button mat-icon-button color="warn" style="top: 15%">
+        <mat-card-actions >
+            <button mat-icon-button color="warn" >
                 <mat-icon *ngIf="contact.isFavorite" >favorite</mat-icon>
                 <mat-icon *ngIf="!contact.isFavorite">favorite_border</mat-icon>
             </button>
