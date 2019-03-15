@@ -1,13 +1,14 @@
-import { ConnectionApiService } from './../shared/connection-api.service';
+import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
-import { ListContactsService } from '../shared/list-contacts.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, FormControl, FormGroupDirective, NgForm } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material';
+import { ErrorStateMatcher, MatDialogRef, MatDialog } from '@angular/material';
 import { Contact } from '../shared/model/contact';
-import { Location } from '@angular/common';
 
+import { ListContactsService } from '../shared/list-contacts.service';
+import { ConnectionApiService } from './../shared/connection-api.service';
+import { DialogModalComponent } from '../shared/dialog-modal/dialog-modal.component';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -28,12 +29,14 @@ export class NovoEditarComponent implements OnInit {
   inscriptionUrl: Subscription;
   idContact: number;
   avatar: string;
+  dialogModal: MatDialogRef<DialogModalComponent>;
 
   constructor(private route: ActivatedRoute,
               private location: Location,
               private listContactService: ListContactsService,
               private connection: ConnectionApiService,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,
+              private dialog: MatDialog) {
 
     this.listContactService.setListContactResponsive(true);
   }
@@ -79,11 +82,21 @@ export class NovoEditarComponent implements OnInit {
       });
       this.connection.createContact(valueSubmit).subscribe(
         success => {
-          alert('Cadastrado com sucesso!');
+          this.dialogModal = this.dialog.open(DialogModalComponent, {
+            data: {
+              message: 'Contato inserido com sucesso!',
+              cancelar: false
+            }
+          });
           this.resetForm();
-          this.location.back();
+          // this.location.back();
         },
-        error => alert('Error ao inserir contato')
+        error => this.dialogModal = this.dialog.open(DialogModalComponent, {
+          data: {
+            message: 'Erro, contato não pode ser inserido!',
+            cancelar: false
+          }
+        })
       );
 
     } else {

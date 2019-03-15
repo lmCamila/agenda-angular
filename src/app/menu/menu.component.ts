@@ -1,5 +1,6 @@
-import { ListContactsService } from '../shared/list-contacts.service';
 import { Component, OnInit } from '@angular/core';
+
+import { ListContactsService } from '../shared/list-contacts.service';
 
 @Component({
   selector: 'app-menu',

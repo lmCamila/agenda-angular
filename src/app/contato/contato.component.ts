@@ -1,9 +1,10 @@
-import { ContactSimple } from './../shared/model/contac-silmple';
+import { ConnectionApiService } from './../shared/connection-api.service';
+import { IsFavoriteService } from './../shared/is-favorite.service';
 import { Router } from '@angular/router';
 import { Component, OnInit, Input} from '@angular/core';
 
 import { ListContactsService } from '../shared/list-contacts.service';
-import { Contact } from '../shared/model/contact';
+import { Contact } from './../shared/model/contact';
 
 @Component({
   selector: 'app-contato',
@@ -14,16 +15,29 @@ import { Contact } from '../shared/model/contact';
 export class ContatoComponent implements OnInit {
 
   panelOpenState = false;
-  @Input() contact: ContactSimple;
+  @Input() contact: Contact;
 
   constructor(private router: Router,
-              private listContactService: ListContactsService) { }
+              private listContactService: ListContactsService,
+              public favoriteService: IsFavoriteService,
+              private connection: ConnectionApiService) { }
 
   ngOnInit() {
   }
 
   showDetails() {
     this.router.navigate([`/${this.contact.id}`]);
+  }
+
+  favoriteClick(event) {
+    this.connection.getContactById(event.path[2].dataset.id).subscribe(contact => {
+      this.connection.favorite(contact).subscribe(() => {
+        this.connection.getContactById(event.path[2].dataset.id).subscribe(dados => {
+          this.favoriteService.favorite(dados);
+        });
+      }
+      );
+    });
   }
 
 }
