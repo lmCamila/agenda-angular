@@ -12,8 +12,15 @@ export class IsFavoriteService {
 
   constructor(private connection: ConnectionApiService) { }
 
-  favorite(contact: Contact) {
-   this.issueModificationContact.emit(contact);
+  favorite(id) {
+    this.connection.getContactById(id).subscribe(contact => {
+      this.connection.favorite(contact).subscribe(() => {
+        this.connection.getContactById(id).subscribe(dados => {
+          this.issueModificationContact.emit(dados);
+        });
+      }
+      );
+    });
   }
 
 }

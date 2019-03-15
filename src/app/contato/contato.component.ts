@@ -30,14 +30,7 @@ export class ContatoComponent implements OnInit {
   }
 
   favoriteClick(event) {
-    this.connection.getContactById(event.path[2].dataset.id).subscribe(contact => {
-      this.connection.favorite(contact).subscribe(() => {
-        this.connection.getContactById(event.path[2].dataset.id).subscribe(dados => {
-          this.favoriteService.favorite(dados);
-        });
-      }
-      );
-    });
+    this.favoriteService.favorite(event.path[2].dataset.id);
   }
 
 }
