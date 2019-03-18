@@ -1,3 +1,4 @@
+import { ContatoDeactivateGuard } from './contatos-deactivate.guard';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
@@ -8,9 +9,9 @@ import { ListaContatosComponent } from '../lista-contatos/lista-contatos.compone
 
 const appRoutes: Routes = [
 { path: '' , component: ListaContatosComponent, children: [
-    { path: 'new' , component: NovoEditarComponent},
+    { path: 'new' , component: NovoEditarComponent, canDeactivate: [ContatoDeactivateGuard]},
     { path: ':id' , component: ContatoDetalhesComponent},
-    { path: ':id/edit' , component: NovoEditarComponent}
+    { path: ':id/edit' , component: NovoEditarComponent, canDeactivate: [ContatoDeactivateGuard]}
 ]}];
 
 @NgModule({
@@ -21,6 +22,6 @@ const appRoutes: Routes = [
       scrollPositionRestoration: 'top'
     })
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class RoutingModule { }

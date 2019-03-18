@@ -12,6 +12,7 @@ import { ListContactsService } from '../shared/list-contacts.service';
 import { ConnectionApiService } from './../shared/connection-api.service';
 import { DialogModalComponent } from '../shared/dialog-modal/dialog-modal.component';
 import { NovoEditarService } from './novo-editar.service';
+import { DialogModalService } from '../shared/dialog-modal/dialog-modal.service';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -29,10 +30,10 @@ export class NovoEditarComponent implements OnInit, OnDestroy {
   title = 'Novo';
   matcher = new MyErrorStateMatcher();
   formulario: FormGroup;
-  inscription: Subscription;
   inscriptionUrl: Subscription;
   inscriptionEdit: Subscription;
   inscriptionUpload: Subscription;
+  inscriptionDialog: Subscription;
   avatarEvent: Subscription;
   idContact: number;
   avatar: string;
@@ -46,6 +47,7 @@ export class NovoEditarComponent implements OnInit, OnDestroy {
               private novoEditarService: NovoEditarService,
               private connection: ConnectionApiService,
               private formBuilder: FormBuilder,
+              private dialogService: DialogModalService,
               private dialog: MatDialog) {
     this.listContactService.setListContactResponsive(true);
 

@@ -17,7 +17,6 @@ export class MenuComponent implements OnInit {
   }
 
   search(event: KeyboardEvent) {
-    console.log((event.target as HTMLInputElement).value);
     this.listContactService.searchContact((event.target as HTMLInputElement).value);
   }
 
