@@ -27,6 +27,9 @@ export class ConnectionApiService {
     return this.http.post(environment.apiUrl, contact, this.httpConf).pipe(take(1));
   }
 
+  update(id,contact) {
+    return this.http.put(`${environment.apiUrl}/${id}`, contact, this.httpConf).pipe(take(1));
+  }
   delete(id: number) {
     return this.http.delete(`${environment.apiUrl}/${id}`).pipe(take(1));
   }

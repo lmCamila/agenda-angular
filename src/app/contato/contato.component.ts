@@ -1,10 +1,10 @@
-import { ConnectionApiService } from './../shared/connection-api.service';
-import { IsFavoriteService } from './../shared/is-favorite.service';
 import { Router } from '@angular/router';
 import { Component, OnInit, Input} from '@angular/core';
 
 import { ListContactsService } from '../shared/list-contacts.service';
 import { Contact } from './../shared/model/contact';
+import { ConnectionApiService } from './../shared/connection-api.service';
+import { UpdateService } from '../shared/update.service';
 
 @Component({
   selector: 'app-contato',
@@ -19,7 +19,7 @@ export class ContatoComponent implements OnInit {
 
   constructor(private router: Router,
               private listContactService: ListContactsService,
-              public favoriteService: IsFavoriteService,
+              public updateService: UpdateService,
               private connection: ConnectionApiService) { }
 
   ngOnInit() {
@@ -30,7 +30,7 @@ export class ContatoComponent implements OnInit {
   }
 
   favoriteClick(event) {
-    this.favoriteService.favorite(event.path[2].dataset.id);
+    this.updateService.favorite(event.path[2].dataset.id);
   }
 
 }

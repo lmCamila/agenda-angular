@@ -12,8 +12,13 @@ export class ListContactsService {
 
   listContactResponsive: boolean;
   contacts: Contact[] = [];
-  inscription: Subscription;
+  // emite evento se a lista é responsiva ou não
   issueEventListContact = new EventEmitter < boolean >();
+
+  //emitir evento quando contato for excluído com id do contato
+  issueEventDelete = new EventEmitter< number>();
+
+  //emito evento se o array de contatos é modificado
   issueEventList = new EventEmitter < Contact[] >();
 
   constructor(private connection: ConnectionApiService) { }
@@ -37,13 +42,24 @@ export class ListContactsService {
         }
         return 0;
       });
-    this.setContacts(dados);
     return dados;
   }
+
   getContacts() {
     return this.contacts;
   }
+
   setContacts(dados) {
-    this.contacts = dados;
+      this.contacts = this.loadList(dados);
+      this.issueEventList.emit(this.contacts);
+  }
+
+  deleteContact(id: number) {
+    console.log(this.contacts);
+    const result = this.contacts.filter( c => c.id === id);
+    const pos = this.contacts.indexOf(result[0]);
+    this.contacts.splice(pos, 1);
+    console.log(this.contacts);
+    this.issueEventList.emit(this.contacts);
   }
 }

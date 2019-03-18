@@ -8,6 +8,7 @@ import { Contact } from '../shared/model/contact';
 import { ConnectionApiService } from './../shared/connection-api.service';
 import { MatDialogRef, MatDialog } from '@angular/material';
 import { DialogModalComponent } from '../shared/dialog-modal/dialog-modal.component';
+import { UpdateService } from '../shared/update.service';
 
 @Component({
   selector: 'app-contato-detalhes',
@@ -17,7 +18,7 @@ import { DialogModalComponent } from '../shared/dialog-modal/dialog-modal.compon
 export class ContatoDetalhesComponent implements OnInit, OnDestroy {
 
   inscriptionUrl: Subscription;
-  inscriptionApi: Subscription;
+  inscriptionFav: Subscription;
   inscriptionDialog: Subscription;
   contact: Contact;
   confirmDelete: boolean;
@@ -28,6 +29,7 @@ export class ContatoDetalhesComponent implements OnInit, OnDestroy {
               private listContactService: ListContactsService,
               private connection: ConnectionApiService,
               private dialogModalService: DialogModalService,
+              private updateService: UpdateService,
               private activatedRoute: ActivatedRoute,
               private router: Router) {
       // seta atributo de responsividade no serviço de lista de contatos
@@ -46,6 +48,10 @@ export class ContatoDetalhesComponent implements OnInit, OnDestroy {
           });
       }
     );
+    //evento de update isFavorite
+    this.inscriptionFav = this.updateService.issueModificationContact.subscribe(
+      contactResult => this.contact = contactResult
+    )
   }
 
   editContact() {
@@ -58,23 +64,39 @@ export class ContatoDetalhesComponent implements OnInit, OnDestroy {
               cancelar: true}
     });
     this.inscriptionDialog = this.dialogModalService.eventMessageDialog.subscribe( confirm => {
-        this.connection.delete(this.contact.id).subscribe(
-          success => this.dialogModal = this.dialog.open(DialogModalComponent, {
-            data: { message: `Contato excluído com sucesso!`,
-                    cancelar: false}
-          }),
-          error => this.dialogModal = this.dialog.open(DialogModalComponent, {
-            data: { message: `Erro, contato não pode excluído!`,
-                    cancelar: false}
-          })
-        );
+        if(confirm == true){
+          this.connection.delete(this.contact.id).subscribe(
+            success => {
+              this.dialogModal = this.dialog.open(DialogModalComponent, {
+              data: { message: `Contato excluído com sucesso!`,
+                      cancelar: false}
+              });
+              this.listContactService.deleteContact(this.contact.id);
+          },
+            error => this.dialogModal = this.dialog.open(DialogModalComponent, {
+              data: { message: `Erro, contato não pode excluído!`,
+                      cancelar: false}
+            })
+          );
+        }
       } );
     this.deleteContact = null;
   }
-
-  ngOnDestroy() {
-    this.inscriptionUrl.unsubscribe();
-    this.inscriptionDialog.unsubscribe();
+  favoriteClick() {
+      this.updateService.favorite(this.contact.id); 
   }
 
+  ngOnDestroy() {
+    if(this.inscriptionUrl){
+      this.inscriptionUrl.unsubscribe();
+    }
+    if(this.inscriptionDialog){
+      this.inscriptionDialog.unsubscribe();
+    }
+    if(this.inscriptionFav){
+      this.inscriptionFav.unsubscribe();
+    }
+  }
+
+  
 }

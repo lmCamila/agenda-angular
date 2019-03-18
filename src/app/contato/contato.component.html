@@ -1,6 +1,5 @@
-<mat-card class="card-contact" style="width: 270px; margin: 15px;display: flex;">
+<mat-card class="card-contact" style="width: 270px; margin: 15px;display: flex; justify-content: space-between;">
     <mat-card-header (click)="showDetails()">
-        <input type="hidden" #idContato data-id= "contact.id" value="contact.id">
         <div mat-card-avatar id="avatar">
             <img src="{{ contact.info.avatar }}"
                 width="70px" height="70px" style="width: 75px; height: 75px; border-radius: 70%;">
@@ -8,11 +7,10 @@
         <mat-card-title style="margin-left:30%">
             {{ contact.firstName }} {{ contact.lastName }}
         </mat-card-title>
-        <p>{{ contact.id }}</p>
-        <mat-card-actions >
-            <button mat-icon-button color="warn" [attr.data-id]=contact.id>
-                <mat-icon *ngIf="contact.isFavorite" (click)="favoriteClick($event)" >favorite</mat-icon>
-                <mat-icon *ngIf="!contact.isFavorite" (click)="favoriteClick($event)">favorite_border</mat-icon>
+        <mat-card-actions>
+            <button mat-icon-button color="warn" [attr.data-id]=contact.id (click)="favoriteClick($event)">
+                <mat-icon *ngIf="contact.isFavorite"  >favorite</mat-icon>
+                <mat-icon *ngIf="!contact.isFavorite" >favorite_border</mat-icon>
             </button>
         </mat-card-actions>
     </mat-card-header>

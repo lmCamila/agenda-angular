@@ -1,3 +1,4 @@
+
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
@@ -6,6 +7,7 @@ import { FormGroup, FormBuilder, Validators, FormControl, FormGroupDirective, Ng
 import { ErrorStateMatcher, MatDialogRef, MatDialog } from '@angular/material';
 import { Contact } from '../shared/model/contact';
 
+import { UpdateService } from './../shared/update.service';
 import { ListContactsService } from '../shared/list-contacts.service';
 import { ConnectionApiService } from './../shared/connection-api.service';
 import { DialogModalComponent } from '../shared/dialog-modal/dialog-modal.component';
@@ -27,6 +29,7 @@ export class NovoEditarComponent implements OnInit {
   matcher = new MyErrorStateMatcher();
   formulario: FormGroup;
   inscriptionUrl: Subscription;
+  inscriptionEdit: Subscription;
   idContact: number;
   avatar: string;
   dialogModal: MatDialogRef<DialogModalComponent>;
@@ -34,6 +37,7 @@ export class NovoEditarComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private location: Location,
               private listContactService: ListContactsService,
+              private updateService: UpdateService,
               private connection: ConnectionApiService,
               private formBuilder: FormBuilder,
               private dialog: MatDialog) {
@@ -55,10 +59,12 @@ export class NovoEditarComponent implements OnInit {
             c$.subscribe(contactById => {
               this.fillForm(contactById);
               this.avatar = contactById.info.avatar;
+              this.idContact = contactById.id;
             });
         }
       );
     }
+    // define o formulário
     this.formulario = this.formBuilder.group({
       firstName: [null, [Validators.required, Validators.minLength(3)]],
       lastName: [null, [Validators.required, Validators.minLength(3)]],
@@ -80,34 +86,44 @@ export class NovoEditarComponent implements OnInit {
         isFavorite: valueSubmit.isFavorite === 'true' ? true : false,
         avatar: this.avatar == null ? 'null' : this.avatar
       });
-      this.connection.createContact(valueSubmit).subscribe(
-        success => {
-          this.dialogModal = this.dialog.open(DialogModalComponent, {
+      if(this.title === 'Novo'){
+        this.connection.createContact(valueSubmit).subscribe(
+          success => {
+            this.dialogModal = this.dialog.open(DialogModalComponent, {
+              data: {
+                message: 'Contato inserido com sucesso!',
+                cancelar: false
+              }
+            });
+            this.resetForm();
+          },
+          error => this.dialogModal = this.dialog.open(DialogModalComponent, {
             data: {
-              message: 'Contato inserido com sucesso!',
+              message: 'Erro, contato não pode ser inserido!',
               cancelar: false
             }
-          });
-          this.resetForm();
-          // this.location.back();
-        },
-        error => this.dialogModal = this.dialog.open(DialogModalComponent, {
-          data: {
-            message: 'Erro, contato não pode ser inserido!',
-            cancelar: false
-          }
-        })
-      );
+          })
+        );
+      }else if(this.title === 'Editar'){
+        this.updateService.update(this.idContact,valueSubmit);
+      }
 
     } else {
-      console.log('formulário invalido');
+      this.dialogModal = this.dialog.open(DialogModalComponent, {
+        data: {
+          message: 'Erro, formulário inválido!',
+          cancelar: false
+        }
+      })
     }
    }
-
+// reseta o formulário
   resetForm() {
     this.formulario.reset();
   }
 
+
+  //preenche o form
   fillForm(dados: Contact) {
     this.formulario.patchValue({
       firstName: dados.firstName,
