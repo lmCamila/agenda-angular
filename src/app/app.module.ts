@@ -11,7 +11,7 @@ import { AppComponent } from './app.component';
 import { ContatoComponent } from './contato/contato.component';
 import { MenuComponent } from './menu/menu.component';
 import { NovoEditarComponent } from './novo-editar/novo-editar.component';
-import { ButtonNewComponent } from './button-new/button-new.component';
+import { ButtonComponent } from './button/button.component';
 import { ListaContatosComponent } from './lista-contatos/lista-contatos.component';
 import { ContatoDetalhesComponent } from './contato-detalhes/contato-detalhes.component';
 import { DialogModalComponent } from './shared/dialog-modal/dialog-modal.component';
@@ -23,7 +23,7 @@ import { DialogModalComponent } from './shared/dialog-modal/dialog-modal.compone
     ContatoComponent,
     MenuComponent,
     NovoEditarComponent,
-    ButtonNewComponent,
+    ButtonComponent,
     ListaContatosComponent,
     ContatoDetalhesComponent,
     DialogModalComponent

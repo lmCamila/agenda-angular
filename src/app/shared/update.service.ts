@@ -26,8 +26,8 @@ export class UpdateService {
       );
     });
   }
-  update(id,value){
-    this.connection.update(id,value).subscribe(
+  update(id, value) {
+    this.connection.update(id, value).subscribe(
       success => {
         this.dialogModal = this.dialog.open(DialogModalComponent, {
           data: {
@@ -39,11 +39,11 @@ export class UpdateService {
           contact => this.issueModificationContact.emit(contact)
           );
       },
-      error =>this.dialogModal = this.dialog.open(DialogModalComponent, {
+      error => this.dialogModal = this.dialog.open(DialogModalComponent, {
         data: {
           message: 'Erro, contato não pode ser inserido!',
           cancelar: false
         }
-      }))
+      }));
   }
 }

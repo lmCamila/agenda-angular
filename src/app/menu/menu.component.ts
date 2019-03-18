@@ -9,6 +9,7 @@ import { ListContactsService } from '../shared/list-contacts.service';
 })
 export class MenuComponent implements OnInit {
   menuSearch = false;
+  selected = 'none';
   constructor(private listContactService: ListContactsService) { }
 
   modifyMenu() {
@@ -17,10 +18,17 @@ export class MenuComponent implements OnInit {
 
   search(event: KeyboardEvent) {
     console.log((event.target as HTMLInputElement).value);
+    this.listContactService.searchContact((event.target as HTMLInputElement).value);
   }
 
   onClick() {
     this.listContactService.setListContactResponsive(false);
+  }
+
+  onChangeFav(event) {
+    let isFav: boolean;
+    event === 'true' ? isFav = true : isFav = false;
+    this.listContactService.filter(isFav);
   }
   ngOnInit() {
   }

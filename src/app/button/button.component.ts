@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-button-new',
-  templateUrl: './button-new.component.html',
-  styleUrls: ['./button-new.component.css']
+  selector: 'app-button',
+  templateUrl: './button.component.html',
+  styleUrls: ['./button.component.css']
 })
-export class ButtonNewComponent implements OnInit {
+export class ButtonComponent implements OnInit {
+
   constructor(private router: Router) { }
 
   newContact() {

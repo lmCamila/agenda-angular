@@ -37,7 +37,7 @@ export class NovoEditarComponent implements OnInit, OnDestroy {
   idContact: number;
   avatar: string;
   dialogModal: MatDialogRef<DialogModalComponent>;
-  progress: number = 0;
+  progress = 0;
 
   constructor(private route: ActivatedRoute,
               private location: Location,
@@ -48,13 +48,27 @@ export class NovoEditarComponent implements OnInit, OnDestroy {
               private formBuilder: FormBuilder,
               private dialog: MatDialog) {
     this.listContactService.setListContactResponsive(true);
+
+    // define o formulário
+    this.formulario = this.formBuilder.group({
+      firstName: [null, [Validators.required, Validators.minLength(3)]],
+      lastName: [null, [Validators.required, Validators.minLength(3)]],
+      avatar: [null],
+      email: [null, [Validators.required, Validators.email]],
+      phone: [null, [Validators.required, Validators.minLength(3)]],
+      address: [null, [Validators.required, Validators.minLength(3)]],
+      gender: ['f', Validators.required],
+      company: [null, [Validators.required, Validators.minLength(3)]],
+      comments: [null],
+      isFavorite: ['false', Validators.required],
+    });
   }
 
   ngOnInit() {
-    //inscrição no evento de eviar arquivo
+    // inscrição no evento de eviar arquivo
     this.inscriptionUpload = this.novoEditarService.issueEventupload.subscribe(
       p => this.progress = p
-    )
+    );
     // verifica rota e carrega se necessário contato
     if (this.route.snapshot.routeConfig.path === 'new') {
       this.title = 'Novo';
@@ -73,19 +87,6 @@ export class NovoEditarComponent implements OnInit, OnDestroy {
         }
       );
     }
-    // define o formulário
-    this.formulario = this.formBuilder.group({
-      firstName: [null, [Validators.required, Validators.minLength(3)]],
-      lastName: [null, [Validators.required, Validators.minLength(3)]],
-      avatar: [null],
-      email: [null, [Validators.required, Validators.email]],
-      phone: [null, [Validators.required, Validators.minLength(3)]],
-      address: [null, [Validators.required, Validators.minLength(3)]],
-      gender: ['f', Validators.required],
-      company: [null, [Validators.required, Validators.minLength(3)]],
-      comments: [null],
-      isFavorite: ['false', Validators.required],
-    });
   }
 
   onSubmit() {
@@ -95,7 +96,7 @@ export class NovoEditarComponent implements OnInit, OnDestroy {
         isFavorite: valueSubmit.isFavorite === 'true' ? true : false,
         avatar: this.avatar == null ? 'null' : this.avatar
       });
-      if(this.title === 'Novo'){
+      if (this.title === 'Novo') {
         this.connection.createContact(valueSubmit).subscribe(
           success => {
             this.dialogModal = this.dialog.open(DialogModalComponent, {
@@ -116,8 +117,8 @@ export class NovoEditarComponent implements OnInit, OnDestroy {
             }
           })
         );
-      }else if(this.title === 'Editar'){
-        this.updateService.update(this.idContact,valueSubmit);
+      } else if (this.title === 'Editar') {
+        this.updateService.update(this.idContact, valueSubmit);
       }
 
     } else {
@@ -126,7 +127,7 @@ export class NovoEditarComponent implements OnInit, OnDestroy {
           message: 'Erro, formulário inválido!',
           cancelar: false
         }
-      })
+      });
     }
    }
 // reseta o formulário
@@ -135,7 +136,7 @@ export class NovoEditarComponent implements OnInit, OnDestroy {
   }
 
 
-  //preenche o form
+  // preenche o form
   fillForm(dados: Contact) {
     this.formulario.patchValue({
       firstName: dados.firstName,
@@ -151,26 +152,25 @@ export class NovoEditarComponent implements OnInit, OnDestroy {
     });
   }
 
-  onChangeAvatar(event){
+  onChangeAvatar(event) {
     this.novoEditarService.upload(event.path[0].files[0]);
     this.avatarEvent = this.novoEditarService.issueUrlResponse.subscribe(url => {
       this.avatar = url;
     });
   }
 
-  ngOnDestroy(){
-    if(this.inscriptionEdit){
+  ngOnDestroy() {
+    if (this.inscriptionEdit) {
       this.inscriptionEdit.unsubscribe();
     }
-    if(this.inscriptionUpload){
+    if (this.inscriptionUpload) {
       this.inscriptionUpload.unsubscribe();
     }
-    if(this.inscriptionUrl){
+    if (this.inscriptionUrl) {
       this.inscriptionUrl.unsubscribe();
     }
-    if(this.avatarEvent){
+    if (this.avatarEvent) {
       this.avatarEvent.unsubscribe();
     }
-    
   }
 }

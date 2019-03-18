@@ -12,3 +12,9 @@
       <mat-icon>close</mat-icon>
     </button>
 </mat-toolbar>
+<mat-form-field id="filter">
+  <mat-select (valueChange)="onChangeFav($event)" placeholder="Filtrar por:" >
+    <mat-option value = false>Nenhum</mat-option>
+    <mat-option value = true>Favoritos</mat-option>
+  </mat-select>
+</mat-form-field>

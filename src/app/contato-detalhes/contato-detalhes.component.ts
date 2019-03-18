@@ -46,10 +46,10 @@ export class ContatoDetalhesComponent implements OnInit, OnDestroy {
           });
       }
     );
-    //evento de update isFavorite
+    // evento de update isFavorite
     this.inscriptionFav = this.updateService.issueModificationContact.subscribe(
       contactResult => this.contact = contactResult
-    )
+    );
   }
 
   editContact() {
@@ -62,7 +62,7 @@ export class ContatoDetalhesComponent implements OnInit, OnDestroy {
               cancelar: true}
     });
     this.inscriptionDialog = this.dialogModalService.eventMessageDialog.subscribe( confirm => {
-        if(confirm == true){
+        if (confirm === true) {
           this.connection.delete(this.contact.id).subscribe(
             success => {
               this.dialogModal = this.dialog.open(DialogModalComponent, {
@@ -80,21 +80,21 @@ export class ContatoDetalhesComponent implements OnInit, OnDestroy {
       } );
     this.deleteContact = null;
   }
+
   favoriteClick() {
-      this.updateService.favorite(this.contact.id); 
+      this.updateService.favorite(this.contact.id);
   }
 
   ngOnDestroy() {
-    if(this.inscriptionUrl){
+    if (this.inscriptionUrl) {
       this.inscriptionUrl.unsubscribe();
     }
-    if(this.inscriptionDialog){
+    if (this.inscriptionDialog) {
       this.inscriptionDialog.unsubscribe();
     }
-    if(this.inscriptionFav){
+    if (this.inscriptionFav) {
       this.inscriptionFav.unsubscribe();
     }
   }
 
-  
 }

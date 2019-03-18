@@ -8,11 +8,13 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class ConnectionApiService {
+
   httpConf = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
     })
   };
+
   constructor(private http: HttpClient) { }
 
   list() {
@@ -27,7 +29,7 @@ export class ConnectionApiService {
     return this.http.post(environment.apiUrl, contact, this.httpConf).pipe(take(1));
   }
 
-  update(id,contact) {
+  update(id, contact) {
     return this.http.put(`${environment.apiUrl}/${id}`, contact, this.httpConf).pipe(take(1));
   }
   delete(id: number) {
@@ -48,6 +50,5 @@ export class ConnectionApiService {
       comments: contact.info.comments
      };
     return this.http.put(`${environment.apiUrl}/${contact.id}`, body).pipe(take(1));
-
-    }
+  }
 }
