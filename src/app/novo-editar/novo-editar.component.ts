@@ -1,7 +1,7 @@
 
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, FormControl, FormGroupDirective, NgForm } from '@angular/forms';
 import { ErrorStateMatcher, MatDialogRef, MatDialog } from '@angular/material';
@@ -11,6 +11,7 @@ import { UpdateService } from './../shared/update.service';
 import { ListContactsService } from '../shared/list-contacts.service';
 import { ConnectionApiService } from './../shared/connection-api.service';
 import { DialogModalComponent } from '../shared/dialog-modal/dialog-modal.component';
+import { NovoEditarService } from './novo-editar.service';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -24,28 +25,36 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   templateUrl: './novo-editar.component.html',
   styleUrls: ['./novo-editar.component.css']
 })
-export class NovoEditarComponent implements OnInit {
+export class NovoEditarComponent implements OnInit, OnDestroy {
   title = 'Novo';
   matcher = new MyErrorStateMatcher();
   formulario: FormGroup;
+  inscription: Subscription;
   inscriptionUrl: Subscription;
   inscriptionEdit: Subscription;
+  inscriptionUpload: Subscription;
+  avatarEvent: Subscription;
   idContact: number;
   avatar: string;
   dialogModal: MatDialogRef<DialogModalComponent>;
+  progress: number = 0;
 
   constructor(private route: ActivatedRoute,
               private location: Location,
               private listContactService: ListContactsService,
               private updateService: UpdateService,
+              private novoEditarService: NovoEditarService,
               private connection: ConnectionApiService,
               private formBuilder: FormBuilder,
               private dialog: MatDialog) {
-
     this.listContactService.setListContactResponsive(true);
   }
 
   ngOnInit() {
+    //inscrição no evento de eviar arquivo
+    this.inscriptionUpload = this.novoEditarService.issueEventupload.subscribe(
+      p => this.progress = p
+    )
     // verifica rota e carrega se necessário contato
     if (this.route.snapshot.routeConfig.path === 'new') {
       this.title = 'Novo';
@@ -55,8 +64,8 @@ export class NovoEditarComponent implements OnInit {
         (params: any) => {
             const id = 'id';
             this.idContact = params[id];
-            const c$ =  this.connection.getContactById(params[id]);
-            c$.subscribe(contactById => {
+            const c =  this.connection.getContactById(params[id]);
+            c.subscribe(contactById => {
               this.fillForm(contactById);
               this.avatar = contactById.info.avatar;
               this.idContact = contactById.id;
@@ -96,6 +105,9 @@ export class NovoEditarComponent implements OnInit {
               }
             });
             this.resetForm();
+            this.connection.list().subscribe(dados => {
+              this.listContactService.setContacts(dados);
+            });
           },
           error => this.dialogModal = this.dialog.open(DialogModalComponent, {
             data: {
@@ -139,4 +151,26 @@ export class NovoEditarComponent implements OnInit {
     });
   }
 
+  onChangeAvatar(event){
+    this.novoEditarService.upload(event.path[0].files[0]);
+    this.avatarEvent = this.novoEditarService.issueUrlResponse.subscribe(url => {
+      this.avatar = url;
+    });
+  }
+
+  ngOnDestroy(){
+    if(this.inscriptionEdit){
+      this.inscriptionEdit.unsubscribe();
+    }
+    if(this.inscriptionUpload){
+      this.inscriptionUpload.unsubscribe();
+    }
+    if(this.inscriptionUrl){
+      this.inscriptionUrl.unsubscribe();
+    }
+    if(this.avatarEvent){
+      this.avatarEvent.unsubscribe();
+    }
+    
+  }
 }

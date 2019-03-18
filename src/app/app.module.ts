@@ -14,7 +14,6 @@ import { NovoEditarComponent } from './novo-editar/novo-editar.component';
 import { ButtonNewComponent } from './button-new/button-new.component';
 import { ListaContatosComponent } from './lista-contatos/lista-contatos.component';
 import { ContatoDetalhesComponent } from './contato-detalhes/contato-detalhes.component';
-import { PaginationComponent } from './pagination/pagination.component';
 import { DialogModalComponent } from './shared/dialog-modal/dialog-modal.component';
 
 
@@ -27,7 +26,6 @@ import { DialogModalComponent } from './shared/dialog-modal/dialog-modal.compone
     ButtonNewComponent,
     ListaContatosComponent,
     ContatoDetalhesComponent,
-    PaginationComponent,
     DialogModalComponent
   ],
   imports: [
@@ -39,7 +37,7 @@ import { DialogModalComponent } from './shared/dialog-modal/dialog-modal.compone
     RoutingModule
   ],
   exports: [ ],
-  entryComponents: [ContatoComponent, NovoEditarComponent, PaginationComponent, DialogModalComponent],
+  entryComponents: [ContatoComponent, NovoEditarComponent, DialogModalComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

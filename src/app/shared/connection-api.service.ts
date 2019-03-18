@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { take, map } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 
 import { Contact } from './model/contact';
 import { environment } from 'src/environments/environment';
@@ -16,7 +16,7 @@ export class ConnectionApiService {
   constructor(private http: HttpClient) { }
 
   list() {
-    return this.http.get<Contact[]>(environment.apiUrl);
+    return this.http.get<Contact[]>(environment.apiUrl).pipe(take(1));
   }
 
   getContactById(id: number) {
@@ -35,7 +35,6 @@ export class ConnectionApiService {
   }
 
   favorite(contact: Contact) {
-    console.log(contact.isFavorite);
     const body = {
       firstName : contact.firstName,
       lastName : contact.lastName,
@@ -48,8 +47,6 @@ export class ConnectionApiService {
       phone: contact.info.phone,
       comments: contact.info.comments
      };
-    console.log(body.isFavorite);
-    console.log(`${environment.apiUrl}/${contact.id}`);
     return this.http.put(`${environment.apiUrl}/${contact.id}`, body).pipe(take(1));
 
     }

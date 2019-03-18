@@ -2,7 +2,6 @@ import { ConnectionApiService } from './connection-api.service';
 import { Injectable, EventEmitter } from '@angular/core';
 
 import { Contact } from './model/contact';
-import { Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +21,7 @@ export class ListContactsService {
   issueEventList = new EventEmitter < Contact[] >();
 
   constructor(private connection: ConnectionApiService) { }
+  
 
   setListContactResponsive(isResponsive: boolean) {
     this.listContactResponsive = isResponsive;
@@ -55,11 +55,9 @@ export class ListContactsService {
   }
 
   deleteContact(id: number) {
-    console.log(this.contacts);
     const result = this.contacts.filter( c => c.id === id);
     const pos = this.contacts.indexOf(result[0]);
     this.contacts.splice(pos, 1);
-    console.log(this.contacts);
     this.issueEventList.emit(this.contacts);
   }
 }

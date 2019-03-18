@@ -15,3 +15,13 @@
     justify-content: center;
     margin:3% 0% 0% 0%;
 }
+
+.paginator{
+    clear: both;
+    width: 90%;
+    margin-left: 3%
+}
+
+.displayNone{
+    display: none;
+}

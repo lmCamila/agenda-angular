@@ -3,8 +3,14 @@
     'listContactResponsive': isResponsiveList
 }">
     <app-contato *ngFor="let c of contacts" [contact]=c ></app-contato>
-   
 </div>
+
 <router-outlet></router-outlet>
-    <app-pagination></app-pagination>
+
+<mat-paginator class="paginator" 
+                    [length]="length" 
+                    [pageSize]="pageSize" 
+                    [pageSizeOptions]="[5,10,15]" 
+                    (page)="pageEvent =$event">
+</mat-paginator>
 

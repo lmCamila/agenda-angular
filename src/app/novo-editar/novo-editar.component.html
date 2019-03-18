@@ -22,10 +22,10 @@
             </div>
             <div style="margin-top:5%">
                 <label for="avatar">Avatar:</label>
-                <input type="file" id="avatar" formControlName="avatar" accept="image/png, image/jpeg">
-                <mat-icon style="color:green">check</mat-icon>
+                <input type="file" id="avatar" formControlName="avatar" accept="image/png, image/jpeg" (change)="onChangeAvatar($event)">
+                <mat-icon *ngIf="sendAvatar == 'ok'" style="color:green">check</mat-icon>
                 <div style="width:80%; margin-top:3%">
-                    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                    <mat-progress-bar mode="determinate" [value]=progress></mat-progress-bar>
                 </div>
             </div>
             <div>
@@ -85,7 +85,7 @@
             </div>
         </mat-card-content>
         <mat-card-actions>
-            <button type="submit" mat-flat-button color="primary"  >Enviar</button>
+            <button type="submit" mat-flat-button color="primary" [ngClass]="{'disable': sendAvatar == 'send' }" >Enviar</button>
             <button type="button" mat-flat-button (click)="resetForm()"  >Cancelar</button>
         </mat-card-actions>
         

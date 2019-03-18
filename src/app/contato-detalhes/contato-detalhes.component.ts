@@ -22,7 +22,6 @@ export class ContatoDetalhesComponent implements OnInit, OnDestroy {
   inscriptionDialog: Subscription;
   contact: Contact;
   confirmDelete: boolean;
-
   dialogModal: MatDialogRef<DialogModalComponent>;
 
   constructor(private dialog: MatDialog,
@@ -34,7 +33,6 @@ export class ContatoDetalhesComponent implements OnInit, OnDestroy {
               private router: Router) {
       // seta atributo de responsividade no serviço de lista de contatos
       this.listContactService.setListContactResponsive(true);
-
   }
 
   ngOnInit() {
